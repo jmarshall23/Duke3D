@@ -8143,7 +8143,7 @@ int main(int argc,char  **argv)
 	//		"group of known dukers who know what they are doing should be using\n"
 	//		"it. Please report new bugs at xd@m-klein.com or on DX forums. Thx!\n\n");
 	
-	printf("*** Chocolate DukeNukem3D v%d.%d ***\n\n", CHOCOLATE_DUKE_REV_X, CHOCOLATE_DUKE_REV_DOT_Y);
+	//printf("*** Chocolate DukeNukem3D v%d.%d ***\n\n", CHOCOLATE_DUKE_REV_X, CHOCOLATE_DUKE_REV_DOT_Y);
 
 	// FIX_00033: Fake multi and AI are now fully working
 	ud.multimode = 1;  // xduke: must be done before checkcommandline or that will prevent Fakeplayer and AI
