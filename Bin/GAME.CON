@@ -277,29 +277,7 @@ state genericgrowcode
   }
 ends
 
-state spawnburnedcorpse
-    spawn FIRE2
-    spawn BURNEDCORPSE
-    killit
-ends
 
-state genericonfirecode
-    ifrnd 32
-    {
-		sound FLESH_BURNING
-        addstrength -6
-    }
-    ifrnd 128 {
-        spawn ONFIRE;
-    }
-    ifonwater {
-        count ONFIRETIME
-    }
-    else ifinwater {
-        count ONFIRETIME
-    }
-
-ends
 
 
 action ASHARKCRUZING 0 8 5 1 24
@@ -362,6 +340,7 @@ actor SHARK SHARKSTRENGTH ASHARKCRUZING SHARKVELS randomangle geth
 
       lotsofglass 30
       sound GLASS_BREAKING
+      addkills 1
       killit
     }
     break
@@ -455,6 +434,7 @@ actor SHARK SHARKSTRENGTH ASHARKCRUZING SHARKVELS randomangle geth
       {
         sound SQUISHED
         guts JIBS6 5
+        addkills 1
         killit
       }
     }
@@ -1389,16 +1369,6 @@ actor SMALLSMOKE 0 SMOKEFRAMES
       move SMOKEVEL geth getv faceplayer
     ifspawnedby RPG
       cstat 2
-    else ifspawnedby FLAMETHROWERFLAME {
-        sizeat 80 80
-    }
-    else ifspawnedby ONFIRE {
-        sizeat 40 40
-        cstator 2 
-    }
-  }
-  ifspawnedby FLAMETHROWERFLAME {
-        sizeto 128 128
   }
   ifpdistl 1596
     ifspawnedby RPG
@@ -1517,20 +1487,9 @@ actor SHRINKEREXPLOSION 0 SHRINKERFRAMES
 enda
 
 action EXPLOSION_FRAMES 0 20 1 1  4
-action EXPLOSION_FRAMES_FAST 1 19 1 1 2
 actor EXPLOSION2 1 EXPLOSION_FRAMES
-  ifaction EXPLOSION_FRAMES {
-    ifspawnedby FLAMETHROWERFLAME {
-        action EXPLOSION_FRAMES_FAST
-        sizeat 38 38
-    }
-    ifactioncount 20
-        killit
-  }
-  else {
-    ifactioncount 19
-        killit
-  }
+  ifactioncount 20
+    killit
 enda
 
 actor EXPLOSION2BOT 1 EXPLOSION_FRAMES
@@ -1642,13 +1601,8 @@ actor ROTATEGUN ROTTURRETSTRENGTH
     }
     else
     {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-	  else {
-		  action ASATNSPIN
-		  debris SCRAP1 4
-	  }
+      action ASATNSPIN
+      debris SCRAP1 4
     }
     move 0
   }
@@ -1945,7 +1899,7 @@ actor ACCESSCARD
         ifpinventory GET_ACCESS 0
           break
         addinventory GET_ACCESS 1
-       // quote 43
+        quote 43
         state getcode
       }
 enda
@@ -2597,6 +2551,7 @@ ends
 
 
 
+
 action FEMSHRUNK
 action FEMFROZEN1 1
 action FEMGROW
@@ -3113,7 +3068,7 @@ actor EGG TOUGH
       ifrnd 84
         spawn BLOODPOOL
 
-      // addkills 1
+      addkills 1
       killit
     }
 
@@ -3148,7 +3103,7 @@ actor EGG TOUGH
         break
       }
 
-      // addkills 1
+      addkills 1
 
       sound SQUISHED
 
@@ -3308,7 +3263,6 @@ action PFLINTCHING  106  1   1   1   10
 action PTHROWNBACK  106  5   1   1   18
 action PFROZEN     20  1   5
 action PLYINGDEAD   113  1   1
-action PONFIRE	20	4	5	1	16
 
 action PSWIMMINGGO   375   1   5   1   10
 action PSWIMMING   375   4   5   1   13
@@ -3350,43 +3304,6 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
   ifaction 0
     action PSTAND
 
-  ifaction PONFIRE 
-  {
-	palfrom 32 64 32 0
-    ifonwater {
-        count ONFIRETIME
-    }
-    else ifinwater {
-        count ONFIRETIME
-    }
-
-    ifcount ONFIRETIME
-    {
-      getlastpal
-      move 0
-      action PSTAND
-    }
-    else
-    {
-		ifrnd 26
-		{
-			addstrength -3
-			sound FLESH_BURNING
-		}
-		ifrnd 128 {
-			spawn ONFIRE;
-		}
-    }
-	ifmultiplayer {	
-		ifstrength 0 {
-			strength 0
-			ifhitweapon {
-				nullop
-			}
-		}	 
-	}
-  }
-
   ifaction PFROZEN
   {
     cstat 257
@@ -3417,18 +3334,7 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
     else
     {
       cstat 32768
-	  ifmultiplayer
-         quote 13
-	  else
-	  {
-		ifplaybackon
-		{
-		}
-		else
-		{
-			quote 13
-		}
-	  }
+      quote 13
       ifhitspace
       {
         action PSTAND
@@ -3464,18 +3370,7 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
     {
       ifmove PGROWINGPOP
       {
-        ifmultiplayer
-		   quote 13
-	    else
-	    {
-		  ifplaybackon
-		  {
-		  }
-		  else
-		  {
-		  	quote 13
-		  }
-	    }
+        quote 13
         ifhitspace
         {
           action 0
@@ -3538,18 +3433,7 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
     {
       ifactioncount 3
         move PSTOPED
-      ifmultiplayer
-	     quote 13
-	  else
-	  {
-		ifplaybackon
-		{
-		}
-		else
-		{
-			quote 13
-		}
-	  }
+      quote 13
       ifhitspace
       {
         action PSTAND
@@ -3574,18 +3458,7 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
 
     ifaction PEXPLODEAD
     {
-      ifmultiplayer
-	     quote 13
-	  else
-	  {
-		ifplaybackon
-		{
-		}
-		else
-		{
-			quote 13
-		}
-	  }
+      quote 13
       ifhitspace
       {
         resetplayer
@@ -3821,24 +3694,6 @@ actor APLAYER MAXPLAYERHEALTH PSTAND 0 0
       palfrom 16 32
     ifwasweapon FIRELASER
       palfrom 32 32
-
-    ifwasweapon FLAMETHROWERFLAME
-    {
-	  ifaction PONFIRE {
-		resetcount
-	  }
-	  else {
-		  fall
-		  ifrnd 32
-			spawn BLOOD
-		  ifdead
-			state standard_pjibs
-		  palfrom 48 52
-		  action PONFIRE
-		  resetcount
-		  break
-	  }
-    }
 
     ifdead
     {
@@ -4160,7 +4015,6 @@ action ATROOPSHOOT    35  1  5  1   30
 action ATROOPJETPACK  40  1  5  1  1
 action ATROOPJETPACKILL 40  2  5  1   50
 action ATROOPFLINTCH  50  1  1  1  6
-action ATROOPFLINTCHFIRE  50  1  1  1  6
 action ATROOPDYING    50  5  1  1   16
 action ATROOPDEAD     54
 action ATROOPPLAYDEAD   54
@@ -4193,25 +4047,6 @@ ai AITROOPJETPACK  ATROOPJETPACK   TROOPJETPACKVELS seekplayer
 ai AITROOPSHRUNK   ATROOPWALKING   SHRUNKVELS fleeenemy
 ai AITROOPHIDE     ATROOPABOUTHIDE TROOPSTOPPED faceplayer
 ai AITROOPGROW     ATROOPGROW    DONTGETUP faceplayerslow
-ai AITROOPONFIRE ATROOPWALKING TROOPWALKVELS fleeenemy
-
-state trooponfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AITROOPSEEKENEMY
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound PRED_PAIN
-		}
-    }
-    ifstrength 0 {
-        action ATROOPDYING;
-    }
-ends
 
 state troophidestate
   ifaction ATROOPREAPPEAR
@@ -4503,19 +4338,13 @@ state troopdying
   {
     ifactioncount 5
     {
-		ifspritepal 2 {
-			addkills 1
-			state spawnburnedcorpse
-		}
-		else {
-			cstat 0
-			iffloordistl 8
-			sound THUD
-			ifrnd 64
-			spawn BLOODPOOL
-			state rf
-			strength 0
-		}
+      cstat 0
+      iffloordistl 8
+      sound THUD
+      ifrnd 64
+        spawn BLOODPOOL
+      state rf
+      strength 0
       move TROOPSTOPPED
       action ATROOPDEAD
     }
@@ -4579,10 +4408,6 @@ state checktroophit
       state standard_jibs
       killit
     }
-    else ifwasweapon FLAMETHROWERFLAME
-    {
-        state spawnburnedcorpse
-    }
     else
     {
       sound PRED_DYING
@@ -4602,41 +4427,17 @@ state checktroophit
   }
   else
   {
-	ifwasweapon FLAMETHROWERFLAME {
-		nullop 
-	}
-	else {
-		state random_wall_jibs
-		sound PRED_PAIN
-	}
+    state random_wall_jibs
+    sound PRED_PAIN
 
     ifwasweapon SHRINKSPARK
     {
-		ifspritepal 2 {
-			getlastpal
-		}
       sound ACTOR_SHRINKING
       ai AITROOPSHRUNK
     }
     else
       ifwasweapon GROWSPARK
         sound EXPANDERHIT
-    else
-      ifwasweapon FLAMETHROWERFLAME
-      {
-        ifspritepal 2 {
-            nullop
-        }
-        else {
-            spritepal 2
-            ai AITROOPONFIRE
-            resetcount
-            state trooponfirestate
-        }
-      }
-	else ifai AITROOPONFIRE {
-		break
-	}
     else
       iffloordistl 32
         ifrnd 96
@@ -4897,9 +4698,6 @@ state troopcode fall
       state troophidestate
       break
     }
-    else ifai AITROOPONFIRE {
-        state trooponfirestate
-    }
   }
 
   ifhitweapon
@@ -5012,25 +4810,6 @@ ai AILIZSHRUNK ALIZWALKING SHRUNKVELS fleeenemy
 ai AILIZGROW ALIZSTAND  LIZSTOP faceplayerslow
 ai AILIZSPIT ALIZSCREAM LIZSTOP faceplayerslow
 ai AILIZDYING ALIZDYING LIZSTOP faceplayer
-ai AILIZONFIRE ALIZWALKING LIZWALKVEL fleeenemy
-
-state lizonfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AILIZGETENEMY
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound CAPT_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AILIZDYING;
-    }
-ends
 
 state lizseekstate
 
@@ -5272,10 +5051,6 @@ state checklizhit
       state standard_jibs
       killit
     }
-    else ifwasweapon FLAMETHROWERFLAME
-    {
-      state spawnburnedcorpse
-    }
     else
     {
       state rf
@@ -5287,47 +5062,24 @@ state checklizhit
   }
   else
   {
-	ifwasweapon FLAMETHROWERFLAME {
-		nullop 
-	}
-	else {
-	    sound CAPT_PAIN
-	}
+    sound CAPT_PAIN
     ifwasweapon SHRINKSPARK
     {
-      ifspritepal 2 {
-        getlastpal
-      }
       sound ACTOR_SHRINKING
       ai AILIZSHRUNK
       break
     }
     ifwasweapon GROWSPARK
       sound EXPANDERHIT
+
     state random_wall_jibs
-    ifwasweapon FLAMETHROWERFLAME
-    {
-      ifspritepal 2 {
-        nullop
-      }
-      else {
-        spritepal 2
-        ai AILIZONFIRE
-        resetcount
-        state lizonfirestate
-      }
-    }
-	else ifai AILIZONFIRE {
-		break
-	}
-    else ifp palive
+    ifp palive
       ifcansee
         ifcanshoottarget
     {
       ai AILIZSHOOTENEMY
       break
     }
-    
   }
 ends
 
@@ -5365,18 +5117,12 @@ state lizdyingstate
   else
     ifai AILIZDYING
       ifactioncount 6
-	  {
-		ifspritepal 2 {
-			addkills 1
-			state spawnburnedcorpse
-		}
-		else {
-			iffloordistl 8
-			  sound THUD
-		}
-		move LIZSTOP
-		action ALIZLYINGDEAD
-	  }
+  {
+    iffloordistl 8
+      sound THUD
+    move LIZSTOP
+    action ALIZLYINGDEAD
+  }
 ends
 
 state lizdodgestate
@@ -5469,9 +5215,6 @@ state lizcode
     else
       ifai AILIZDYING
         state lizdyingstate
-    else
-      ifai AILIZONFIRE
-        state lizonfirestate
     else
       ifai AILIZSPIT
     {
@@ -5719,25 +5462,6 @@ ai AIOCTAHIT AOCTAHIT OCTASTOPPED faceplayer
 ai AIOCTASHRUNK AOCTAWALK SHRUNKVELS faceplayer
 ai AIOCTAGROW AOCTASTAND OCTASTOPPED faceplayerslow
 ai AIOCTADYING AOCTADYING OCTASTOPPED faceplayer
-ai AIOCTAONFIRE AOCTAWALK OCTAWALKVELS fleeenemy
-
-state octaonfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AIOCTAGETENEMY
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound OCTA_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AIOCTADYING;
-    }
-ends
 
 state octagetenemystate
 
@@ -5790,9 +5514,6 @@ ends
 state checkoctahitstate
   ifwasweapon SHRINKSPARK
   {
-    ifspritepal 2 {
-	    getlastpal
-    }
     sound ACTOR_SHRINKING
     ai AIOCTASHRUNK
   }
@@ -5832,10 +5553,6 @@ state checkoctahitstate
         ai AIOCTAGROW
         break
       }
-      else ifwasweapon FLAMETHROWERFLAME
-      {
-        state spawnburnedcorpse
-      }      
       else
       {
         state rf
@@ -5856,33 +5573,13 @@ state checkoctahitstate
         ifwasweapon GROWSPARK
           sound EXPANDERHIT
 
-      ifwasweapon FLAMETHROWERFLAME
-      {
-        ifspritepal 2 {
-          nullop
-        }
-        else {
-          spritepal 2
-          ai AIOCTAONFIRE
-          resetcount
-          state octaonfirestate
-        }
-      }
-	  else ifai AIOCTAONFIRE {
-	   	  break
-	  }
-      else {
-	    sound OCTA_PAIN
-        spawn BLOOD
-		ifrnd 64 
-			ai AIOCTAHIT
-	  }
+      sound OCTA_PAIN
+      spawn BLOOD
+      ifrnd 64
+        ai AIOCTAHIT
     }
   }
-  ifai AIOCTAONFIRE
-    nullop
-  else
-    state random_wall_jibs
+  state random_wall_jibs
 ends
 
 state octashrunkstate
@@ -5899,14 +5596,8 @@ ends
 state octadyingstate
   ifactioncount 8
   {
-	ifspritepal 2 {
-		addkills 1
-		state spawnburnedcorpse
-	}
-	else {
-		ifrnd 64
-		  spawn BLOODPOOL
-	}
+    ifrnd 64
+      spawn BLOODPOOL
     move OCTASTOPPED
     action AOCTADEAD
     break
@@ -6021,9 +5712,6 @@ actor OCTABRAIN OCTASTRENGTH
     else
       ifai AIOCTAGROW
         state genericgrowcode
-    else
-      ifai AIOCTAONFIRE
-        state octaonfirestate
 
     ifmove OCTAUPVELS nullop
     else
@@ -6069,25 +5757,6 @@ ai AIPIGDYING APIGDYING PIGSTOPPED faceplayer
 ai AIPIGSHRINK APIGWALK SHRUNKVELS fleeenemy
 ai AIPIGGROW APIGGROW PIGSTOPPED faceplayerslow
 ai AIPIGHIT APIGHIT PIGSTOPPED faceplayer
-ai AIPIGONFIRE APIGWALK PIGWALKVELS fleeenemy
-
-state pigonfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AIPIGSEEKENEMY
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound PIG_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AIPIGDYING;
-    }
-ends
 
 state pigseekenemystate
 
@@ -6341,51 +6010,23 @@ state checkpighitstate
       state standard_jibs
       killit
     }
-    else ifwasweapon FLAMETHROWERFLAME
-    {
-      state spawnburnedcorpse
-    }      
     else
       ai AIPIGDYING
         sound PIG_DYING
   }
   else
   {
-	ifwasweapon FLAMETHROWERFLAME {
-		nullop 
-	}
-	else {
-		sound PIG_PAIN
-		state random_wall_jibs
-	}
+    sound PIG_PAIN
+    state random_wall_jibs
 
     ifwasweapon SHRINKSPARK
     {
-		ifspritepal 2 {
-			getlastpal
-		}
       sound ACTOR_SHRINKING
       ai AIPIGSHRINK
     }
     else
       ifwasweapon GROWSPARK
         sound EXPANDERHIT
-    else
-      ifwasweapon FLAMETHROWERFLAME
-    {
-      ifspritepal 2 {
-        nullop
-      }
-      else {
-        spritepal 2
-        ai AIPIGONFIRE
-        resetcount
-        state pigonfirestate
-      }
-    }
-	else ifai AIPIGONFIRE {
-		break
-	}	        
     else
       ifrnd 32
         ai AIPIGHIT
@@ -6414,17 +6055,11 @@ ends
 state pigdyingstate
   ifactioncount 5
   {
-	ifspritepal 2 {
-		addkills 1
-		state spawnburnedcorpse
-	}
-	else {
-		ifrnd 64
-		  spawn BLOODPOOL
-		state rf
-		iffloordistl 8
-		  sound THUD
-	}
+    ifrnd 64
+      spawn BLOODPOOL
+    state rf
+    iffloordistl 8
+      sound THUD
     action APIGDEAD
     move PIGSTOPPED
     break
@@ -6536,9 +6171,6 @@ actor PIGCOP PIGCOPSTRENGTH APIGSTAND
     else
       ifai AIPIGCHARGE
         state pigseekenemystate
-    else 
-      ifai AIPIGONFIRE
-        state pigonfirestate
     ifhitweapon
       state checkpighitstate
     ifrnd 1
@@ -6577,25 +6209,6 @@ ai AIBOSS1SHOOTENEMY ABOSS1SHOOT BOSS1STOPPED faceplayer
 ai AIBOSS1LOBBED ABOSS1LOB BOSS1STOPPED faceplayer // faceplayersmart
 ai AIBOSS1DYING ABOSS1DYING BOSS1STOPPED faceplayer
 ai AIBOSS1PALSHRINK ABOSS1WALK PALBOSS1SHRUNKRUNVELS furthestdir
-ai AIBOSS1ONFIRE ABOSS1WALK BOSS1WALKVELS fleeenemy
-
-state boss1onfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AIBOSS1SEEKENEMY
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound BOS1_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AIBOSS1DYING;
-    }
-ends
 
 state boss1palshrunkstate
   ifcount SHRUNKDONECOUNT
@@ -6712,18 +6325,12 @@ state boss1dyingstate
   }
   ifactioncount 5
   {
-	ifspritepal 2 {
-		addkills 1
-		state spawnburnedcorpse
-	}
-	else {
-		iffloordistl 8
-		  sound THUD
-	}
+    iffloordistl 8
+      sound THUD
     action ABOSS1DEAD
     cstat 0
     ifspritepal 0
-        endofgame 52
+    endofgame 52
   }
 ends
 
@@ -6860,8 +6467,7 @@ state boss1code
       ai AIBOSS1RUNENEMY
     else
     {
-      ifspritepal 21
-        strength BOSS1PALSTRENGTH
+      strength BOSS1PALSTRENGTH
       ai AIBOSS1SHOOTENEMY
     }
   }
@@ -6891,14 +6497,8 @@ state boss1code
     state boss1dyingstate
   else
   {
-    ifhitweapon {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-      else {
-		state checkboss1hitstate
-      }
-	}
+    ifhitweapon
+      state checkboss1hitstate
     else
       ifp palive
         ifspritepal 0
@@ -7059,7 +6659,7 @@ state boss2dyingstate
     action ABOSS2DEAD
     cstat 0
     ifspritepal 0
-        endofgame 52
+      endofgame 52
   }
 ends
 
@@ -7199,8 +6799,7 @@ state boss2code
       ai AIBOSS2RUNENEMY
     else
     {
-      ifspritepal 21
-        strength BOSS2PALSTRENGTH
+      strength 1
       sound BOS2_ATTACK ai AIBOSS2SHOOTENEMY
     }
   }
@@ -7230,14 +6829,7 @@ state boss2code
     state boss2dyingstate
   else
   {
-    ifhitweapon {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-      else {
-		state checkboss2hitstate
-	  }
-	}
+    ifhitweapon state checkboss2hitstate
     else
       ifp palive
         ifspritepal 0 ifpdistl
@@ -7252,7 +6844,6 @@ state boss2code
 ends
 
 actor BOSS2 BOSS2STRENGTH fall state boss2code enda
-actor BOSS2STAYPUT BOSS2STRENGTH cactor BOSS2 enda
 
 action ABOSS3WALK        0  4  5  1  30
 action ABOSS3FROZEN        0  1  5
@@ -7373,7 +6964,7 @@ state boss3dyingstate
     action ABOSS3DEAD
     cstat 0
     ifspritepal 0
-        endofgame 52
+    endofgame 52
   }
 ends
 
@@ -7483,8 +7074,7 @@ state boss3code
       ai AIBOSS3RUNENEMY
     else
     {
-      ifspritepal 21
-        strength BOSS3PALSTRENGTH
+      strength 1
       ai AIBOSS3LOBENEMY
     }
   }
@@ -7511,14 +7101,8 @@ state boss3code
     state boss3dyingstate
   else
   {
-    ifhitweapon {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-      else {
-        state checkboss3hitstate
-      }
-	}
+    ifhitweapon
+      state checkboss3hitstate
     else
       ifp palive
         ifspritepal 0
@@ -7531,7 +7115,6 @@ state boss3code
 ends
 
 actor BOSS3 BOSS3STRENGTH fall state boss3code enda
-actor BOSS3STAYPUT BOSS3STRENGTH cactor BOSS3 enda
 
 
 action ACOMMBREETH  0  3  5  1  40
@@ -7557,36 +7140,12 @@ ai AICOMMSPIN ACOMMSPIN COMMGETVELS spin
 ai AICOMMDYING ACOMMDYING COMMSTOPPED faceplayer
 ai AICOMMSHRUNK ACOMMGET COMMSLOW furthestdir
 ai AICOMMGROW ACOMMGET COMMSTOPPED furthestdir
-ai AICOMMONFIRE ACOMMGET COMMGETVELS fleeenemy
-
-state commonfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AICOMMGET
-    }
-    else
-    { 
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound COMM_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AICOMMDYING;
-    }
-ends
 
 state checkcommhitstate
 
   ifhitweapon
   {
-  	ifwasweapon FLAMETHROWERFLAME {
-		nullop 
-	}
-	else {
-	    guts JIBS6 2
-	}
+    guts JIBS6 2
 
     ifdead
     {
@@ -7630,42 +7189,15 @@ state checkcommhitstate
     }
     else
     {
-		ifwasweapon FLAMETHROWERFLAME {
-			nullop 
-		}
-		else {
-			soundonce COMM_PAIN
-		}
+      soundonce COMM_PAIN
       ifwasweapon SHRINKSPARK
       {
-		ifspritepal 2 {
-			getlastpal
-		}
         sound ACTOR_SHRINKING
         ai AICOMMSHRUNK
       }
       else
         ifwasweapon GROWSPARK
           sound EXPANDERHIT
-      else
-        ifwasweapon FLAMETHROWERFLAME
-      {
-        ifspritepal 2 {
-          nullop
-        }
-		else ifai AICOMMSHRUNK {
-			nullop
-		}
-        else {
-          spritepal 2
-          ai AICOMMONFIRE
-          resetcount
-          state commonfirestate
-        }
-      }
-	  else ifai AICOMMONFIRE {
-	    break
-	  }	 	                    
       else
         ifrnd 24
           ai AICOMMABOUTTOSHOOT
@@ -7836,9 +7368,6 @@ actor COMMANDER COMMANDERSTRENGTH
       ifrnd 32
         operate
   }
-  else 
-    ifai AICOMMONFIRE
-      state commonfirestate
 
   ifai AICOMMDYING
   {
@@ -7856,18 +7385,12 @@ actor COMMANDER COMMANDERSTRENGTH
 
     ifaction ACOMMDYING
       ifactioncount 8
-	  {
-		ifspritepal 2 {
-			addkills 1
-			state spawnburnedcorpse
-		}
-		else {
-		  iffloordistl 8
-			sound THUD
-		}
-		cstat 0
-		action ACOMMDEAD
-	  }
+    {
+      iffloordistl 8
+        sound THUD
+      cstat 0
+      action ACOMMDEAD
+    }
   }
   else
   {
@@ -8234,19 +7757,15 @@ useractor enemy TANK TANKSTRENGTH fall
       action ATANKDEAD
     else
     {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-	  else {
-		debris SCRAP1 1
-		ifaction ATANKSHOOTING break
-        ifrnd 192
-        {
-          move TANKSTOP geth
-          action ATANKSHOOTING
-          stopsound TANK_ROAM
-        }
-	  }
+      debris SCRAP1 1
+      ifaction ATANKSHOOTING break
+
+      ifrnd 192
+      {
+        move TANKSTOP geth
+        action ATANKSHOOTING
+        stopsound TANK_ROAM
+      }
     }
   }
 
@@ -8354,8 +7873,8 @@ state boss4dyingstate
   {
     iffloordistl 8
       sound THUD
-    ifspritepal 0
-        endofgame 52
+
+    endofgame 52
     action ABOSS4DEAD
     cstat 0
   }
@@ -8395,11 +7914,7 @@ ends
 state boss4code
 
   ifai 0
-  {
-    ifspritepal 21
-      strength BOSS4PALSTRENGTH
-     ai AIBOSS4LAYEGGS
-  }
+    ai AIBOSS4LAYEGGS
   else
     ifaction BOSS4FLINTCH
     {
@@ -8417,14 +7932,8 @@ state boss4code
     state boss4dyingstate
   else
   {
-    ifhitweapon {
-	  ifwasweapon FLAMETHROWERFLAME {
-		nullop
-	  }
-      else {
-        state checkboss4hitstate
-	  }
-	}
+    ifhitweapon
+      state checkboss4hitstate
     else
       ifp palive
         ifpdistl 1280
@@ -8439,8 +7948,8 @@ actor BOSS4STAYPUT BOSS4STRENGTH
 
   fall
   cactor BOSS4
-  state boss4code
   spritepal 6
+  state boss4code
   getlastpal
 
 enda
@@ -8449,8 +7958,8 @@ actor BOSS4 BOSS4STRENGTH
 
   fall
   cactor BOSS4
-  state boss4code
   spritepal 6
+  state boss4code
   getlastpal
 
 enda
@@ -8539,25 +8048,7 @@ ai AINEWBEASTGROW ANEWBEASTSTAND  NEWBEASTSTOP faceplayerslow
 ai AINEWBEASTDYING ANEWBEASTDYING NEWBEASTSTOP faceplayer
 ai AINEWBEASTSHOOT ANEWBEASTSCREAM NEWBEASTSTOP faceplayerslow
 ai AINEWBEASTFLINTCH ANEWBEASTFLINTCH NEWBEASTSTOP faceplayerslow
-ai AINEWBEASTONFIRE ANEWBEASTWALKING NEWBEASTWALKVEL fleeenemy
 
-state newbeastonfirestate
-    ifcount ONFIRETIME 
-    {
-        getlastpal
-        ai AINEWBEASTGETENEMY
-    }
-    else
-    {
-        state genericonfirecode
-		ifrnd FIREPAINFREQ {
-			sound NEWBEAST_PAIN
-		}
-    }
-    ifstrength 0 {
-        ai AINEWBEASTDYING;
-    }
-ends
 
 state newbeastseekstate
 
@@ -8823,54 +8314,27 @@ state checknewbeasthit
   }
   else
   {
-	ifwasweapon FLAMETHROWERFLAME {
-		nullop 
-	}
-	else {
-		sound NEWBEAST_PAIN
-	}
+    sound NEWBEAST_PAIN
     ifwasweapon GROWSPARK
       sound EXPANDERHIT
 /*
 //  The alien is immune to the shrinker
     ifwasweapon SHRINKSPARK
     {
-		ifspritepal 2 {
-			getlastpal
-		}
       sound ACTOR_SHRINKING
       ai AINEWBEASTSHRUNK
       break
     }
 */
-    ifwasweapon FLAMETHROWERFLAME
-    {
-      ifspritepal 2 {
-        nullop
-      }
-      else {
-        getlastpal
-        spritepal 2
-        ai AINEWBEASTONFIRE
-        resetcount
-        state newbeastonfirestate
-      }
-    }
-	else ifai AINEWBEASTONFIRE {
-	  break
-	}		                  
+    state random_wall_jibs
+    ifrnd 32
+      ai AINEWBEASTFLINTCH
     else
-    {
-      state random_wall_jibs
       ifrnd 32
-        ai AINEWBEASTFLINTCH
-      else
-        ifrnd 32
-          ifpdistg 3500
-            ifp palive
-              ifcansee
-                ai AINEWBEASTSHOOT
-    }
+        ifpdistg 3500
+          ifp palive
+            ifcansee
+              ai AINEWBEASTSHOOT
   }
 ends
 
@@ -8908,18 +8372,12 @@ state newbeastdyingstate
   else
     ifai AINEWBEASTDYING
       ifactioncount 7
-	  {
-		ifspritepal 2 {
-			addkills 1
-			state spawnburnedcorpse
-		}
-		else {
-			iffloordistl 8
-			  sound THUD
-		}
-		move NEWBEASTSTOP
-		action ANEWBEASTLYINGDEAD
-	  }
+  {
+    iffloordistl 8
+      sound THUD
+    move NEWBEASTSTOP
+    action ANEWBEASTLYINGDEAD
+  }
 ends
 
 state newbeastdodgestate
@@ -9043,9 +8501,6 @@ state newbeastcode
             sound NEWBEAST_SPIT
       }
     }
-    else
-      ifai AINEWBEASTONFIRE
-        state newbeastonfirestate
   }
 
   ifhitweapon
@@ -9065,20 +8520,11 @@ useractor enemy NEWBEAST NEWBEASTSTRENGTH
     state newbeastcode
   else
   {
-    ifspritepal 2
-      nullop
-    else
-      spritepal 6
+    spritepal 6
     state newbeastcode
     ifaction ANEWBEASTFROZEN
       break
-    ifspritepal 2
-      nullop
-    else
-      getlastpal
+    getlastpal
   }
 enda
 
-include FLAMETHROWER.CON
-include FIREFLYTROOPER.CON
-include EPISODE5BOSS.CON

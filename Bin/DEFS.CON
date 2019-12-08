@@ -572,9 +572,7 @@ define BOSS1SHOOT 2660
 define BOSS1LOB 2670
 define BOSSTOP 2696
 define BOSS2 2710
-define BOSS2STAYPUT 2711
 define BOSS3 2760
-define BOSS3STAYPUT 2761
 define SPINNINGNUKEICON 2813
 define BIGFNTCURSOR 2820
 define SMALLFNTCURSOR 2821
@@ -733,37 +731,6 @@ define SIGN1 4909
 define SIGN2 4912
 define JURYGUY 4943
 
-define WIDESCREENSTATUSBAR 5120 
-define RPGGUNWIDE 5121
-define FIRSTGUNRELOADWIDE 5122
-define FREEZEWIDE 5123
-define FREEZEFIREWIDE 5124
-define SHRINKERWIDE 5127
-define CRACKKNUCKLESWIDE 5129
-
-define FLAMETHROWERSPRITE 5134
-define FLAMETHROWERAMMO 5135
-define FLAMETHROWER 5138
-define FLAMETHROWERFIRE 5139
-define FLAMETHROWERFLAME 1891
-define FLAMETHROWERPILOT 5174
-define FIREBALL 5163
-define ONFIRE 5152
-define ONFIRESMOKE 5143
-define BURNEDCORPSE 5173
-define WHISPYSMOKE 5268
-
-define FIREFLY 5180
-define FIREFLYSHRINKEFFECT 5360
-define FIREFLYGROWEFFECT 5367
-define FIREFLYFLYINGEFFECT 5296
-
-define BOSS5 5310
-define BOSS5STAYPUT 5311
-
-define LAVAPOOL 5304
-define LAVASPLASH 5371
-define LAVAPOOLBUBBLE 5207
 
 // These tile positions are reserved!
 
@@ -799,7 +766,6 @@ define TRIPBOMB_WEAPON     8
 define FREEZE_WEAPON       9
 define HANDREMOTE_WEAPON   10
 define GROW_WEAPON         11
-define FLAMETHROWER_WEAPON 12
 
 // Defines the motion characteristics of an actor
 define faceplayer 1
@@ -1251,65 +1217,5 @@ define HORNSND                        394
 define BELLSND                        395
 define GOAWAY                         396
 define JOKE                           397
-define FLAMETHROWER_INTRO             398
-define FLAMETHROWER_LOOP              399
-define FLAMETHROWER_END               400
-define E5L7_DUKE_QUIT_YOU             401
-define E5L4_DUKE_WHY_SERIOUS          402
-define E5L1_DUKE_CREAMANDSUGAR        403
-define E5L1_DUKE_CURIOUSER            404
-define E5L1_DUKE_DEJAVU               405
-define E5L1_DUKE_GETTINGOLD           406 
-define E5L1_DUKE_GOODCOFFEE           407
-define E5L1_DUKE_NOTPOSSIBLE          408
-define E5L2_DUKE_BEHERE               409
-define E5L2_DUKE_MEATCANDY            410
-define E5L2_DUKE_SISKOVA              411
-define E5L2_DUKE_USSR                 412
-define E5L4_DUKE_CRYINGMUMMY          413
-define E5L4_DUKE_CRYSTALSKULL         414
-define E5L4_DUKE_FIFTHELEMENT         415
-define E5L4_DUKE_HASSANCHOP           416
-define E5L4_DUKE_HELLOMUMMY           417
-define E5L5_DUKE_FROMAGE              418
-define E5L5_DUKE_ICU                  419
-define E5L5_DUKE_SOUFFLE              420
-define E5L6_DUKE_ALCATRAZ             421
-define E5L6_DUKE_ILLEGALALIENS        422
-define E5L7_DUKE_DREAMS               423
-define E5L7_DUKE_FLAMINGALIENBITCH    424
-define E5L7_DUKE_ROSEBUD              425
-define E5L8_DUKE_ETERNITY             426
-define MQ_DUKE_BIGBANG                427
-define MQ_DUKE_COBRA                  428
-define MQ_DUKE_GRANTORINO             429
-define MQ_DUKE_JOSEYWALES             430
-define MQ_DUKE_LITTLECHINA            431
-define MQ_DUKE_ONDEADLYGROUND         432
-define MQ_DUKE_PREDATOR               433
-define MQ_DUKE_RAMBO                  434
-define MQ_DUKE_REDHEAT                435
-define MQ_DUKE_RIDDICK                436
-define MQ_DUKE_THEGOODTHEBAD          437
-define MQ_DUKE_TOMBSTONE              438
-define MQ_DUKE_TRUEGRIT               439
-define MQ_DUKE_WALKINGDEAD            440
-define MQ_DUKE_YOUNGGUNS              441
-define CHESHIREALIEN_01               442
-define CHESHIREALIEN_02               443
-define CHESHIREALIEN_03               444
-define CHESHIREALIEN_04               445
-define FLAMETHROWER_ENEMY             446
-define REMOTERIDICULE_0				  447
-define REMOTERIDICULE_1				  448
-define REMOTERIDICULE_2				  449
-define REMOTERIDICULE_3				  450
-define REMOTERIDICULE_4				  451
-define REMOTERIDICULE_5				  452
-define REMOTERIDICULE_6				  453
-define REMOTERIDICULE_7				  454
-define REMOTERIDICULE_8				  455
-define REMOTERIDICULE_9				  456
-
-// MAXIMUM NUMBER OF SOUNDS: 1024 ( 0-1023 )
+// MAXIMUM NUMBER OF SOUNDS: 450 ( 0-449 )
 
